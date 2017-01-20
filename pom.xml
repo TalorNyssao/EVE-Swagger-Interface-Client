@@ -7,6 +7,26 @@
   
   <build>
 		<plugins>
+
+			<plugin>
+				<groupId>de.nyssao</groupId>
+				<artifactId>ESI-beautifier</artifactId>
+  				<version>0.0.1-SNAPSHOT</version>
+				<executions>
+					<execution>
+						<id>beautify</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>beautify</goal>
+						</goals>
+						<configuration>
+							<inputSpec>esi.json</inputSpec>
+							<outputSpec>${project.build.directory}/pretty.esi.json</outputSpec>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+    
 			<plugin>
 				<groupId>io.swagger</groupId>
 				<artifactId>swagger-codegen-maven-plugin</artifactId>
@@ -17,7 +37,7 @@
 							<goal>generate</goal>
 						</goals>
 						<configuration>
-							<inputSpec>esi.json</inputSpec>
+							<inputSpec>${project.build.directory}/pretty.esi.json</inputSpec>
 							<language>java</language>
 							<output>${project.build.directory}/esi-java</output>
 							<configOptions>
@@ -36,4 +56,7 @@
 			</plugin>
 		</plugins>
 	</build>
+  <modules>
+  	<module>tools/ESI-beautifier</module>
+  </modules>
 </project>

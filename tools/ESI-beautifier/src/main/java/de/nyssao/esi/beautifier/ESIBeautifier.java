@@ -19,7 +19,6 @@ import io.swagger.models.Path;
 import io.swagger.models.Response;
 import io.swagger.models.Swagger;
 import io.swagger.models.parameters.Parameter;
-import io.swagger.models.parameters.PathParameter;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.ObjectProperty;
 import io.swagger.models.properties.Property;
@@ -29,10 +28,10 @@ import io.swagger.util.Json;
 
 public class ESIBeautifier {
 
-	Model internalServerErrorModel;
-	Model notFoundModel;
-	Model forbiddenModel;
-	Model unprocessableEntityModel;
+	protected Model internalServerErrorModel;
+	protected Model notFoundModel;
+	protected Model forbiddenModel;
+	protected Model unprocessableEntityModel;
 
 	public static void main(String[] args) throws IOException {
 		File          file    = new File("esi.json");

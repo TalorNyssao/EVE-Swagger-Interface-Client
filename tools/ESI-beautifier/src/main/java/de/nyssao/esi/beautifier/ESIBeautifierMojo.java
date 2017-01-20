@@ -38,14 +38,14 @@ import java.nio.file.Paths;
  * Goal which touches a timestamp file.
  *
  */
-@Mojo(name = "touch", defaultPhase = LifecyclePhase.PROCESS_SOURCES)
+@Mojo(name = "beautify", defaultPhase = LifecyclePhase.PROCESS_SOURCES)
 public class ESIBeautifierMojo extends AbstractMojo {
 	
-	@Parameter(defaultValue = "nice.swagger.json", property = "outputFile", required = true)
-	private File outputFile;
+	@Parameter(defaultValue = "nice.swagger.json", property = "outputSpec", required = true)
+	private File outputSpec;
 
-	@Parameter(defaultValue = "swagger.json", property = "inputFile", required = true)
-	private File inputFile;
+	@Parameter(defaultValue = "swagger.json", property = "inputSpec", required = true)
+	private File inputSpec;
 
 	public ESIBeautifierMojo() {
 		
@@ -54,19 +54,19 @@ public class ESIBeautifierMojo extends AbstractMojo {
 	public ESIBeautifierMojo(File inputFile, File outputFile) {
 		this();
 		
-		this.inputFile  = inputFile;
-		this.outputFile = outputFile;
+		this.inputSpec  = inputFile;
+		this.outputSpec = outputFile;
 	}
 	
 	public void execute() throws MojoExecutionException {
-		File outputDirectory = outputFile.getParentFile();
+		File outputDirectory = outputSpec.getParentFile();
 
 		if (!outputDirectory.exists()) {
 			outputDirectory.mkdirs();
 		}
 		
 		SwaggerParser swaggerParser = new SwaggerParser();
-		Swagger       swagger       = swaggerParser.read(inputFile.getAbsolutePath());
+		Swagger       swagger       = swaggerParser.read(inputSpec.getAbsolutePath());
 		ESIBeautifier beautifier    = new ESIBeautifier();
 		
 		swagger = beautifier.makePretty(swagger);
@@ -74,7 +74,7 @@ public class ESIBeautifierMojo extends AbstractMojo {
 		String swaggerString = Json.pretty(swagger);
 		
 		try {
-			Files.write(outputFile.toPath(), swaggerString.getBytes());
+			Files.write(outputSpec.toPath(), swaggerString.getBytes());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
